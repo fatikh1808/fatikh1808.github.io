@@ -79,11 +79,11 @@ class Block {
                 },
                 start: function (event, ui) {
                     that.dragging = true;
-                    // $(".blocks").css({
-                    //     transform: "rotateY(360deg) rotateX(0deg)",
-                    // });
+                    $(".blocks").css({
+                        transform: "rotateY(360deg) rotateX(0deg)",
+                    });
                     $(this).css("cursor", "pointer");
-                    // $(".blocks__box").addClass("box_transform");
+                    $(".blocks__box").addClass("box_transform");
                     //resize bug fix ui drag
                     var left = parseInt($(this).css("left"), 10);
                     left = isNaN(left) ? 0 : left;
