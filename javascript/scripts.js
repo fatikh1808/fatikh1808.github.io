@@ -212,7 +212,7 @@ class Block {
 class Container {
     constructor() {
         this.$container = $(".blocks");
-        this.boxCount = _.random(20, 40);
+        this.boxCount = _.random(10, 20);
         this.boxes = [];
         this.count;
         this.dragging = false;
