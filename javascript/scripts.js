@@ -212,7 +212,7 @@ class Block {
 class Container {
     constructor() {
         this.$container = $(".blocks");
-        this.boxCount = _.random(20, 40);
+        this.boxCount = _.random(30, 100);
         this.boxes = [];
         this.count;
         this.dragging = false;
@@ -225,18 +225,18 @@ class Container {
 
     bodyModificator() {
         $("body").css("background-color", getRandomColor());
-        $("body").on("click", () => {
-            let isExist = $(".blocks__box")
-                .attr("class")
-                .includes("box_transform");
-            const boxItem = $(".blocks__box");
+        // $("body").on("click", () => {
+        //     let isExist = $(".blocks__box")
+        //         .attr("class")
+        //         .includes("box_transform");
+        //     const boxItem = $(".blocks__box");
 
-            if (!isExist && !this.dragging) {
-                boxItem.addClass("box_transform");
-            } else {
-                boxItem.removeClass("box_transform");
-            }
-        });
+        //     if (!isExist && !this.dragging) {
+        //         boxItem.addClass("box_transform");
+        //     } else {
+        //         boxItem.removeClass("box_transform");
+        //     }
+        // });
         $("body").append(this.$container);
     }
 
