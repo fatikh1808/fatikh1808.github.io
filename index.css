@@ -29,19 +29,36 @@
     border: 1px solid;
     position: absolute;
 }
-
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
 #box-top {
-    filter: opacity(0.5);
+    filter: opacity(0.6);
 }
 #box-bottom {
-    filter: opacity(0.5);
+    filter: opacity(0.6);
 }
 #box-left {
-    filter: opacity(0.5);
+    filter: opacity(0.6);
 }
 #box-right {
-    filter: opacity(0.5);
+    filter: opacity(0.6);
 }
+#box-back {
+    filter: opacity(0.9);
+}
+#box-front {
+    filter: brightness(0.8);
+}
+
 
 .blocks {
     transform-style: preserve-3d;

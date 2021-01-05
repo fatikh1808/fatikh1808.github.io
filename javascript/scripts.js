@@ -1,3 +1,10 @@
+
+
+// if ($(event.target.parentNode).css("top", "left") == $(event.target.parentNode).css("top", "left")) {
+//     () => merge
+// } else if()
+
+
 function getRandomColor() {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -44,25 +51,44 @@ class Block {
 
     setRandomColorOnClick(box) {
         if (box) {
-            $(box).on("click", (event) => {
-                if (!this.dragging) {
-                    $(`.${event.target.classList[1]}`).css(
+            $(box).change(function (event) {
+                $(`.${event.target.classList[1]}`).css(
                         "background-color",
-                        getRandomColor()
+                        event.target.value
                     );
                     $(event.target.parentNode).data("color", [
-                        ...$(event.target.parentNode).data("color"),
-                        rgbToHex($(event.target).css("background-color")),
+                        event.target.value,
                     ]);
                     $(".color-block").remove();
+            });
+            $(box).on("click", (event) => {
+                if (!this.dragging) {
+                    $(event.target.parentNode).css("transform", `translate3d(0px, 0px, ${_.random(10, 200)}px)`)
+
+                    // $(`.${event.target.classList[1]}`).css(
+                    //     "background-color",
+                    //     getRandomColor()
+                    // );
+                    // $(event.target.parentNode).data("color", [
+                    //     rgbToHex($(event.target).css("background-color")),
+                    // ]);
+                    // $(".color-block").remove();
+                    // this.setMove(event.target)//add color to color box onclick
                 }
             });
         }
     }
 
     dragAndDrop(box) {
+
+        let startX;
+        let startY;
+        let finishX;
+        let finishY;
+
         if (box) {
             const that = this;
+
             let __dx;
             let __dy;
             let __recoupLeft, __recoupTop;
@@ -78,6 +104,9 @@ class Block {
                     ui.position.top += __recoupTop;
                 },
                 start: function (event, ui) {
+                    startX = event.pageX
+                    startY = event.pageY
+
                     that.dragging = true;
                     $(".blocks").css({
                         transform: "rotateY(360deg) rotateX(0deg)",
@@ -93,12 +122,19 @@ class Block {
                     __recoupTop = top - ui.position.top;
                 },
                 stop: function (event, ui) {
+                    // finishX = startX - event.pageX
+                    // finishY = startY - event.pageY
+
+                    // let f = (finishY < 0 ? finishY * -1 : finishY) / 2;
+                    // let b = (finishX < 0 ? finishX * -1 : finishX) / 2;
+// get location of the box 
+
+
                     $(this).css("cursor", "default");
                     setTimeout(() => {
                         that.dragging = false;
                         $(".blocks").css({
-                            transformStyle: "preserve-3d",
-                            transform: "rotateY(380deg) rotateX(50deg)",
+                            transform: `rotateY(${_.random(0, 390)}deg) rotateX(${_.random(0, 390)}deg)`,
                         });
                         $(".blocks__box").removeClass("box_transform");
                     }, 250);
@@ -144,13 +180,13 @@ class Block {
 
     makeBlock() {
         const color = getRandomColor();
-        const size = `${_.random(2, 4)}rem`;
+        const size = `${_.random(2, 6)}rem`;
         const halfSize = `${parseInt(size) / 2}rem`;
         const node = $(`
             <div class="blocks__box">
                 <div class="blocks__box__item box-${this.counter}" id="box-top" style="transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 0px, ${halfSize}); height: ${size}; width: ${size}; background-color: ${color}"></div>
                 <div class="blocks__box__item box-${this.counter}" id="box-bottom" style="transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 0px, -${halfSize}); height: ${size}; width: ${size}; background-color: ${color}"></div>
-                <div class="blocks__box__item box-${this.counter}" id="box-front" style="transform: translate3d(0px, 0px, ${halfSize}); transform-origin: 0px 0px; height: ${size}; width: ${size}; background-color: ${color}"></div>
+                <input type="color" class="blocks__box__item box-${this.counter}" id="box-front" style="transform: translate3d(0px, 0px, ${halfSize}); transform-origin: 0px 0px; height: ${size}; width: ${size}; background-color: ${color}" value=${color}></input>
                 <div class="blocks__box__item box-${this.counter}" id="box-back" style="transform: translate3d(0px, 0px, -${halfSize}); height: ${size}; width: ${size}; background-color: ${color}"></div>
                 <div class="blocks__box__item box-${this.counter}" id="box-left" style="transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 0px, ${halfSize}); height: ${size}; width: ${size}; background-color: ${color}"></div>
                 <div class="blocks__box__item box-${this.counter}" id="box-right" style="transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 0px, -${halfSize}); height: ${size}; width: ${size}; background-color: ${color}"></div>
@@ -161,7 +197,7 @@ class Block {
             .css("width", size)
             .css("zIndex", _.random(0, 500))
             .css("position", "fixed")
-            .css("transform", `translate3d(0px, 0px, ${_.random(10, 200)}px)`)
+            // .css("transform", `translate3d(0px, 0px, ${_.random(10, 200)}px)`)
             .css("transform-style", "preserve-3d")
             .data("color", [color]);
 
@@ -254,6 +290,9 @@ $(function () {
     const container = new Container();
 
     container.init();
+    $('#colorPicker').change(function(event) {   
+        console.log(event.target.value)
+    });
 
     $(document).on("keydown", (event) => {
         const isCtrl = event.ctrlKey;
