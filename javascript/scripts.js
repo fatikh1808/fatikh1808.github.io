@@ -1,10 +1,4 @@
 
-
-// if ($(event.target.parentNode).css("top", "left") == $(event.target.parentNode).css("top", "left")) {
-//     () => merge
-// } else if()
-
-
 function getRandomColor() {
     const letters = "0123456789ABCDEF";
     let color = "#";
